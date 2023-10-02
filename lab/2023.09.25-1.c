@@ -5,7 +5,7 @@ int main() {
     float inputNumber;
     scanf("%f", &inputNumber);
 
-    float roundOff = (inputNumber+0.005) * 100) / 100.0;
+    float roundOff = ((inputNumber+0.005) * 100) / 100.0;
     float roundDown = floor(inputNumber * 100) / 100.0;
 
     printf("%.2f\n", roundOff);
