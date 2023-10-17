@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/CYC/Desktop/program/programming",
-      "program": "c:/Users/CYC/Desktop/program/programming/build/Debug/outDebug",
+      "cwd": "c:/Users/CYC/Desktop/program/lab",
+      "program": "c:/Users/CYC/Desktop/program/lab/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
