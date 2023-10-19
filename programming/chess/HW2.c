@@ -21,8 +21,8 @@ int can_place(int chess[BOARD_SIZE][BOARD_SIZE],int player, int x, int y){
         int x_ = x + dx;
         int y_ = y + dy;
         
-
-        if (in_board(x_, y_) && judge[x_][y_] != 0 && chess[x_][y_] != player){
+    if (judge[x_][y_] != player){
+         if (in_board(x_, y_) && judge[x_][y_] != 0 && chess[x_][y_] != player){
             x_ += dx;
             y_ += dy;
         }
@@ -31,6 +31,8 @@ int can_place(int chess[BOARD_SIZE][BOARD_SIZE],int player, int x, int y){
             return 1;  
         }
     }
+    }
+       
 
     return 0;  
     }
