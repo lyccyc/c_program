@@ -6,7 +6,7 @@ int in_board(int x, int y) {
     return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
 }
 
-//判斷可夏童艷色的旗子與否
+//判斷可下同顏色的旗子與否
 int can_place(int chess[BOARD_SIZE][BOARD_SIZE],int player, int x, int y){
     if (chess[x][y] != 0){
         return 0;
@@ -20,22 +20,28 @@ int can_place(int chess[BOARD_SIZE][BOARD_SIZE],int player, int x, int y){
         int dy = judge[d][1];
         int x_ = x + dx;
         int y_ = y + dy;
-        
-    if (judge[x_][y_] != player){
-         if (in_board(x_, y_) && judge[x_][y_] != 0 && chess[x_][y_] != player){
+        int n=0;
+
+        while(in_board(x_, y_)){
+            if (chess[x_][y_] == 0){
+                break;
+            }
+            else if (chess[x_][y_] == player) {
+                if(n==0){
+                    break;;
+                }
+                else{
+                    return 1;
+                }
+                }
             x_ += dx;
             y_ += dy;
-        }
-
-        if (in_board(x_, y_) && chess[x_][y_] == player) {
-            return 1;  
+            n+=1;
         }
     }
-    }
-       
-
+    
     return 0;  
-    }
+}
 
 
 int main() {
@@ -45,7 +51,7 @@ int main() {
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 1, 2, 0, 0, 0},
+        {0, 0, 0, 1, 1, 1, 2, 0},
         {0, 0, 0, 2, 1, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},
