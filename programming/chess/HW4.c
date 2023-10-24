@@ -76,11 +76,6 @@ int newStep(int chess[SIZE][SIZE], int x, int y, int dx, int dy)
     }
     return 0;
 }
-//checkNewStep 用來計算 根據輸入的座標 (x,y)
-//其8個方向可以下的所有位子
-//可以下的位子將紀錄再next[][]中，當return後
-//next[][]會被更改(如果有可下子的位子）
-void checkNewStep(int chess[8][8], int next[8][8], int x, int y) {
     
 }
 //checkNewStepByColor 函數用來計算，根據你輸入的 color 棋子，所有可下的位子
