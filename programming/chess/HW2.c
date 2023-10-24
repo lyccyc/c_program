@@ -46,7 +46,7 @@ int can_place(int chess[BOARD_SIZE][BOARD_SIZE],int player, int x, int y){
 
 int main() {
 
-    // 示例棋盘，1 表示黑棋，2 表示白棋，0 表示空白
+    // 示例棋盤，1 表示黑棋，2 表示白棋，0 表示空白
     int chess[BOARD_SIZE][BOARD_SIZE] = {
         {0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0},

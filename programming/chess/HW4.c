@@ -1,5 +1,13 @@
 #include <stdio.h>
 #define SIZE 8
+/*程式流程
+in_board:確認在棋盤內
+checkNewStepByColor:所有顏色和輸入座標一樣的棋子(才能找出所有可下的位置）
+checkNewStep:和輸入同樣顏色的棋子八個方向可以下的座標
+newStep:計算輸入座標和可下座標間距離［return 0=無解/return n=(dx,dy)*n可以下］
+printnext:印出答案*/
+
+//2023.10.25 checkNewStep unfin
 
 int chess[SIZE][SIZE]={
     {0,0,0,0,0,0,0,0},
@@ -12,19 +20,57 @@ int chess[SIZE][SIZE]={
     {0,0,0,0,0,0,0,0}
 };
 
-//印出棋盤
-void printchess(){
-    for(int i=0;i<SIZE;i++){
-        for (int j=0;j<SIZE;j++)
-            if(chess[i][j] == 3) 
-                printf("x");
-            else printf("%d", chess[i][j]);
-        printf("\n");  
+//判斷是否在棋盤內
+int in_board(int x, int y) {
+    return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE;
 }
+//判斷位置 (x, y) 能否下顏色為 color 的棋，可以下的位子將紀錄再next[][]中，
+void checkNewStep(int chess[SIZE][SIZE], int next[SIZE][SIZE], int x, int y, int color) {
+    color=chess[x][y];
+    if (chess[x][y] != 0){
+        return 0;
+    }
+
+    //二維陣列判斷八個方向
+    int judge[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
+
+    for (int d = 0; d < SIZE; d++) {
+        int dx = judge[d][0];
+        int dy = judge[d][1];
+        int x_ = x + dx;
+        int y_ = y + dy;
+
+        while(in_board(x_, y_)){
+            if (chess[x_][y_] != 0){
+                break;
+            }
+            else  {
+                next[x][y]=chess[x_][y_];
+                return  next[x][y];
+                }
+        }
+            x_ += dx;
+            y_ += dy;
+    }
+    return 0;
+    }
+
+
+//所有顏色和輸入座標一樣的棋子(才能找出所有可下的位置）
+void checkNewStepByColor(int chess[SIZE][SIZE], int next[SIZE][SIZE], int color){
+    for(int i = 0; i < SIZE; i ++){
+        for(int j = 0; j < SIZE; j ++){
+        int check=chess[i][j];
+        if (check==color){
+            checkNewStep(chess,next,i,j);
+        }
+        }
+    }
 }
 
-//印出可下的座標
-void print_can_play(int next[SIZE][SIZE]){
+// 印出所有可下的座標
+void printNext(int next[SIZE][SIZE]){
+    int first = 1;
     for(int i = 0; i < SIZE; i ++){
         for(int j = 0; j < SIZE; j ++){
             if(next[i][j]){
@@ -34,61 +80,5 @@ void print_can_play(int next[SIZE][SIZE]){
             }
         }
     }
-}
-
-//newStep 函數會根據給定的座標 (x,y)及給定的方向 (dx,dy), 
-//其中 (dx, dy) in {(-1,-1),(-1,0), (-1, 1), (0,-1),(0,1), (1,-1),(1,0),(1,1)} 八個方位之一 
-//return 0: 表示無可下子位子
-//return n: 表示 (x,y)+n*(dx,dy)可以下子
-int newStep(int chess[SIZE][SIZE], int x, int y, int dx, int dy)
-{
-   int judge[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
-
-   int color1=chess[x][y];
-   if (color1==0){
-        return 0;
-   }
-
-    int color2;
-    int distance=0;
-
-    while(1){
-        int x_=x+dx;
-        int y_=y+dy;
-        distance++;
-        color2=chess[x_][y_];
-        //相同顏色的棋子
-        if (color2==color1){
-            break;
-        }
-        //超出邊界
-        if (x_<0 || x>SIZE || y_<0 || y_>SIZE){
-            break;
-        }
-        if (color2==0){
-            if (distance <= 1){
-                break;
-            }
-            else{
-                return distance;
-            }
-        }
-    }
-    return 0;
-}
-    
-}
-//checkNewStepByColor 函數用來計算，根據你輸入的 color 棋子，所有可下的位子
-//所以當結束函數 return 後，next[][]內容會被更改
-//所以呼叫這函數時，傳進來的next[][]必須被初ㄓ
-void checkNewStepByColor(int chess[SIZE][SIZE], int next[SIZE][SIZE], int color) 
-{
-    for(int i = 0; i < SIZE; i ++){
-        for(int j = 0; j < SIZE; j ++){
-        int check=chess[i][j]
-        if (check==color){
-            checkNewStep(chess,next,x,y)
-        }
-        }
-    }
+    return;  
 }
