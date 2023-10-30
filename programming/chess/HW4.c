@@ -22,7 +22,7 @@ int in_board(int x, int y) {
     return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
 }
 //判斷位置 (x, y) 能否下顏色為 color 的棋，可以下的位子將紀錄在next[][]中，
-void checkNewStep(int chess[SIZE][SIZE], int next[SIZE][SIZE], int x, int y,int dx,int dy) {
+void checkNewStep(int chess[SIZE][SIZE], int next[SIZE][SIZE], int x, int y) {
     int color=chess[x][y];
     if (chess[x][y] != 0){
         return;
@@ -32,8 +32,8 @@ void checkNewStep(int chess[SIZE][SIZE], int next[SIZE][SIZE], int x, int y,int 
     int judge[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
 
     for (int d = 0; d < 8; d++) {
-        dx = judge[d][0];
-        dy = judge[d][1];
+        int dx = judge[d][0];
+        int dy = judge[d][1];
         int x_ = x + dx;
         int y_ = y + dy;
 
@@ -52,12 +52,12 @@ void checkNewStep(int chess[SIZE][SIZE], int next[SIZE][SIZE], int x, int y,int 
 }
 
 //所有空白的地方(才能找出所有可下的位置）
-void checkNewStepByColor(int chess[SIZE][SIZE], int next[SIZE][SIZE], int color,int dx,int dy){
+void checkNewStepByColor(int chess[SIZE][SIZE], int next[SIZE][SIZE], int color){
     for(int i = 0; i < SIZE; i ++){
         for(int j = 0; j < SIZE; j ++){
         int check=chess[i][j];
         if (check==color){
-            checkNewStep(chess,next,i,j,dx,dy);
+            checkNewStep(chess,next,i,j);
         }
         }
     }
@@ -82,16 +82,16 @@ void printNext(int next[SIZE][SIZE]){
 int main(){
     //輸入座標
     int i,j,dx,dy;
-    scanf("%d %d %d %d",&i,&j,&dx,&dy);
+    scanf("%d %d",&i,&j);
     int color=chess[i][j];
 
     int ans1[SIZE][SIZE]={0};
     printf("白子可下位置:\n");
-    checkNewStepByColor(chess,ans1,color,dx,dy);
+    checkNewStepByColor(chess,ans1,color);
     printNext(ans1);
 
     int ans2[SIZE][SIZE]={0};
     printf("\n黑子可下位置:\n");
-    checkNewStepByColor(chess,ans2,color,dx,dy);
+    checkNewStepByColor(chess,ans2,color);
     printNext(ans2);
 }

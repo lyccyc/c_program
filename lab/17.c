@@ -12,6 +12,10 @@ int main(){
     for (i=0;i<n;i++){
         scanf("%d\n",&number[i]);
     }
+
+    
+    
+    /*
     for (i=0;i<n;i+2){
         for (j=0;j<x;j++){
             odd[j]=number[i];
@@ -40,5 +44,5 @@ int main(){
             printf("%d %d",odd[i],even[i]);
         }      
     }      
-    }
+    }*/
     
