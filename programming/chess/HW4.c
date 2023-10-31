@@ -48,7 +48,7 @@ int checkNewStep(int chess[8][8], int next[8][8], int color, int x, int y){
                     break;;
                 }
                 else{
-                    return n;
+                    return 1;
                 }
             }
             x_ += dx_;
@@ -56,7 +56,6 @@ int checkNewStep(int chess[8][8], int next[8][8], int color, int x, int y){
             n+=1;
             next[x][y]=chess[x_][y_];        
         }
-        return next[x][y];
     }
     return 0;  
 }
@@ -72,19 +71,35 @@ int checkNewStepByColor(int chess[8][8], int next[8][8], int color){
     return 0;
 }
 
+void newStep(int next[SIZE][SIZE]){
+    int first = 1;
+    for(int i = 0; i < SIZE; i ++){
+        for(int j = 0; j < SIZE; j ++){
+            if(next[i][j]){
+                if(!first) printf(", ");
+                printf("(%d, %d)", i, j);
+                first = 0;
+            }
+        }
+    }
+    return;
+}
+
 int main(){
     //輸入座標、方向
     int i,j,dx,dy;
-    scanf("%d %d %d %d",&i,&j,&dx,&dy);
+    scanf("%d %d",&i,&j);
     int color=chess[i][j];
 
     int ans1[SIZE][SIZE]={0};
     printf("白子所有可下的步\n");
     checkNewStepByColor(chess,ans1,2);
-
+    newStep(ans1);
+    printf("\n");
     
     int ans2[SIZE][SIZE]={0};
     printf("黑子所有可下的步\n");
     checkNewStepByColor(chess,ans2,1);
-
+    newStep(ans2);
+    printf("\n");
 }
