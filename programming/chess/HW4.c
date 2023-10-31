@@ -87,7 +87,7 @@ void newStep(int next[SIZE][SIZE]){
 
 int main(){
     //輸入座標、方向
-    int i,j,dx,dy;
+    int i,j;
     scanf("%d %d",&i,&j);
     int color=chess[i][j];
 
