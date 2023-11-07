@@ -23,6 +23,16 @@ int in_board(int x, int y) {
     return x >= 0 && x < SIZE && y >= 0 && y < SIZE;
 }
 
+// 印出棋盤內容
+void printChess(int chess[SIZE][SIZE]){
+    for(int i = 0; i < SIZE; i ++){
+        for(int j = 0; j < SIZE; j ++)
+            printf("%d ", chess[i][j]);
+        printf("\n");
+    }
+    return;
+}
+
 //和輸入同樣顏色的棋子八個方向可以下的座標
 int checkNewStep(int chess[8][8], int next[8][8], int color, int x, int y){
     if (chess[x][y] != 0){
@@ -84,12 +94,42 @@ void newStep(int next[SIZE][SIZE]){
     }
     return;
 }
+//翻轉棋子
+int reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos_y,int x,int y,int color){
+    change[x][y]=chess[pos_x][pos_y];
+    color=change[x][y];
+    int judge[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
 
+    for (int d = 0; d < 8; d++) {
+        int dx = judge[d][0];
+        int dy = judge[d][1];
+        int x_ = x + dx;
+        int y_ = y + dy;
+        int color2=chess[x_][y_];
+
+        while(in_board(x_,y_)){
+            //遇到空白棋子
+            if (color2==0){
+                return 0;//跳出函式
+            }
+            //遇到我方棋子
+            if (color2==color){
+                break;//跳出迴圈
+            }
+        }
+
+        while(1){
+            change[pos_x][pos_y]=1;
+        }
+    }
+    printChess(change);
+}
 int main(){
     //輸入座標、方向
     int i,j,dx,dy;
     scanf("%d %d %d %d",&i,&j,&dx,&dy);
     int color=chess[i][j];
+    int change[SIZE][SIZE]={0};
 
     int ans1[SIZE][SIZE]={0};
     printf("白子所有可下的步\n");
@@ -102,4 +142,14 @@ int main(){
     checkNewStepByColor(chess,ans2,1);
     newStep(ans2);
     printf("\n");
+
+    //預設玩家下黑棋
+    int pos_x,pos_y;
+    printf("請下適合的位置:\n");
+    scanf("%d %d",pos_x,pos_y);
+    int current_color=1;
+    chess[pos_x][pos_y]=current_color;
+    reverse_chess(chess,change,pos_x,pos_y,i,j,current_color);
+
+
 }
