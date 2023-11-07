@@ -95,7 +95,7 @@ void newStep(int next[SIZE][SIZE]){
     return;
 }
 //翻轉棋子
-int reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos_y,int x,int y,int color){
+void reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos_y,int x,int y,int color){
     change[x][y]=chess[pos_x][pos_y];
     color=change[x][y];
     int judge[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
@@ -110,7 +110,7 @@ int reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos
         while(in_board(x_,y_)){
             //遇到空白棋子
             if (color2==0){
-                return 0;//跳出函式
+                return;//跳出函式
             }
             //遇到我方棋子
             if (color2==color){
@@ -120,6 +120,7 @@ int reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos
 
         while(1){
             change[pos_x][pos_y]=1;
+            break;
         }
     }
     printChess(change);
@@ -146,7 +147,7 @@ int main(){
     //預設玩家下黑棋
     int pos_x,pos_y;
     printf("請下適合的位置:\n");
-    scanf("%d %d",pos_x,pos_y);
+    scanf("%d %d",&pos_x,&pos_y);
     int current_color=1;
     chess[pos_x][pos_y]=current_color;
     reverse_chess(chess,change,pos_x,pos_y,i,j,current_color);
