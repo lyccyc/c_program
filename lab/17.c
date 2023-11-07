@@ -2,47 +2,57 @@
 
 int main(){
     int n,m,num,temp,x;
-    int mod_1,mod_2;
-    int i,j;
-    
+    int mod,mod_1,mod_2;
+    int i,j,k,l;
+    //輸入
     scanf("%d %d",&n,&m);
     x=n/2;
+    mod=n/m;
     int number[n],odd[x],even[x];
 
     for (i=0;i<n;i++){
         scanf("%d\n",&number[i]);
     }
-
     
-    
-    /*
     for (i=0;i<n;i+2){
-        for (j=0;j<x;j++){
+        for(j=0;j<x;j++){
             odd[j]=number[i];
-            if (odd[j]<odd[j+1]){
-                temp = odd[j];
-                odd[j] = odd[j+1];
-                odd[j+1] = temp;
-                }
-            mod_1=odd[j]%m;
+            mod_1=odd[i]%m;
+            mod_2=odd[j]%m;
         }
-    }
-    for (i=0;i<n;i+2){
-        for (j=0;j<x;j++){
-            even[j]=number[i];
-            if (even[j]>even[j+1]){
-                temp = even[j];
-                even[j] = even[j+1];
-                even[j+1] = temp;
+        for (k=0;k<n;k++){
+            for(l=0;l<k;l++){
+                if (odd[k]>odd[l]){
+                    temp=odd[k];
+                    odd[k]=odd[l];
+                    odd[l]=temp;
                 }
+            }
+        }
+        printf("%d",odd[i]);
+        }
+    
+    for (i=1;i<n;i+2){
+        for(j=0;j<x;j++){
+            even[j]=number[i];
+            mod_1=even[i]%m;
             mod_2=even[j]%m;
         }
-    }
+        for (k=0;k<n;k++){
+            for(l=0;l<k;l++){
+                if (even[k]>even[l]){
+                    temp=even[k];
+                    even[k]=even[l];
+                    even[l]=temp;
+                }
+            }
+        }
+        printf("%d",even[i]);
+        }
 
-    while ( mod_1=mod_2 ){
-        for (i=0;i<n;i++){
-            printf("%d %d",odd[i],even[i]);
-        }      
-    }      
-    }*/
+    for(i=0;i<n;i++){
+        printf("%d\n%d\n",odd[i],even[i]);
+    }
+}
+  
     
