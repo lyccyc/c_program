@@ -55,7 +55,7 @@ int checkNewStep(int chess[8][8], int next[8][8], int color, int x, int y){
             }
             else if (chess[x_][y_] == color) {
                 if(n==0){
-                    break;;
+                    break;
                 }
                 else{
                     return 1;
@@ -94,8 +94,8 @@ void newStep(int next[SIZE][SIZE]){
     }
     return;
 }
-//翻轉棋子
-void reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos_y,int x,int y,int color){
+//翻轉棋子，將下的位置從0變成1
+void reverse_input(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos_y,int x,int y,int color){
     change[x][y]=chess[pos_x][pos_y];
     color=change[x][y];
     int judge[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {1, -1}, {-1, 1}};
@@ -108,6 +108,7 @@ void reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int po
         int color2=chess[x_][y_];
 
         while(in_board(x_,y_)){
+            int color2=chess[x_][y_];
             //遇到空白棋子
             if (color2==0){
                 return;//跳出函式
@@ -116,14 +117,39 @@ void reverse_chess(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int po
             if (color2==color){
                 break;//跳出迴圈
             }
+            x_ += dx;
+            y_ += dy;
         }
 
         while(1){
+            int color2=chess[x_][y_];
             change[pos_x][pos_y]=1;
             break;
         }
     }
-    printChess(change);
+}
+
+void check_change(int chess[SIZE][SIZE],int change[SIZE][SIZE],int pos_x,int pos_y,int color){
+    for (int i=-1;i<=1;i++){
+        for (int j=-1;j<=1;j++){
+            if (!i && !j){
+                continue;
+            }
+            reverse_input(chess,change,pos_x,pos_y,i,j,color);
+        }
+    }
+}
+
+int can_reverse(int change[SIZE][SIZE],int i,int j){
+    int rev=0;
+    for (i=0;i<SIZE;i++){
+        for(j=0;j<SIZE;j++){
+            if (change[i][j]){
+                rev++;
+            }
+        }
+    }
+    return rev;
 }
 int main(){
     //輸入座標、方向
@@ -150,7 +176,8 @@ int main(){
     scanf("%d %d",&pos_x,&pos_y);
     int current_color=1;
     chess[pos_x][pos_y]=current_color;
-    reverse_chess(chess,change,pos_x,pos_y,i,j,current_color);
+    check_change(chess,change,pos_x,pos_y,current_color);
+    printChess(chess);
 
 
 }
