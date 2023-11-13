@@ -1,38 +1,58 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// 比較函數，用於排序
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+// 找到陣列的中位數
+int findMedian(int arr[], int n) {
+    qsort(arr, n, sizeof(int), compare);
+    return arr[n / 2];
+}
+
+// 檢查中位數是否滿足條件
+int checkConditions(int arr[], int n, int median) {
+    int countLessThan = 0;
+    int countGreaterThan = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] < median) {
+            countLessThan++;
+        } else if (arr[i] > median) {
+            countGreaterThan++;
+        }
+    }
+
+    // 檢查條件
+    return (countLessThan <= n / 2) && (countGreaterThan <= n / 2);
+}
+
 int main() {
     int n;
 
-    while (scanf("%d", &n) != EOF) {
-        // 读取 n 个数字
-        int numbers[n];
-        for (int i = 0; i < n; i++) {
-            scanf("%d", &numbers[i]);
-        }
+    // 讀取陣列大小
+    printf("輸入陣列大小: ");
+    scanf("%d", &n);
 
-        // 计算 A 的最小可能值
-        int sum = 0;
-        for (int i = 0; i < n; i++) {
-            sum += numbers[i];
-        }
-        int A = (sum + n / 2) / n;  // 四舍五入取整
+    // 宣告陣列
+    int arr[n];
 
-        // 统计满足 A 性质的数字数量
-        int count = 0;
-        for (int i = 0; i < n; i++) {
-            if (abs(numbers[i] - A) == abs(numbers[0] - A)) {
-                count++;
-            } else {
-                break;  // 数组已排序，一旦不满足条件，后面的数字也不会满足
-            }
-        }
+    // 讀取陣列元素
+    printf("輸入陣列元素:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
 
-        // 统计可能的不同整数值
-        int possible_values = n - count + 1;
+    // 找到中位數
+    int median = findMedian(arr, n);
 
-        // 输出结果
-        printf("%d %d %d\n", A, count, possible_values);
+    // 檢查中位數是否滿足條件
+    if (checkConditions(arr, n, median)) {
+        printf("中位數 %d 滿足條件\n", median);
+    } else {
+        printf("中位數 %d 不滿足條件\n", median);
     }
 
     return 0;
