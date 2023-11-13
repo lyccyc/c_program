@@ -29,11 +29,22 @@ int findMin(int arr[], int n) {
     return min;
 }
 
+int findMax(int arr[], int n) {
+    int max = arr[0];
+
+    for (int i = 1; i < n; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
 int main(){
     int n;
     while(scanf("%d\n",&n) != EOF){
-        int i,j,a=0,A=0,B=0;
-        int med,min,ans2=0,ans3=0;
+        int i,j,a=0,b,A=0,B=0;
+        int med,min,ans2=0,ans3=0,max;
         int ans[n],num[n];
         /*
         1. 符合 A 條件的最小值(min)
@@ -46,24 +57,35 @@ int main(){
 
         sort(num,n);
         med=median(num,n);
-        
-        for (i=0;i<n;i++){
-            if (med <= num[i]){
-                ans[i]=num[i];
+        ans[0]=med;
+        max=findMax(num,n);
+        b=max-med;
+
+        for (i=1;i<n;i++){
+            if (b >= 0 && b<=max){
+                ans[i]=b;
                 a+=1;
             }
+            b+=1;
         }
+
         min=findMin(ans,a);//找到中位數最小值
+
         for (i=0;i<n;i++){
             for (j=0;j<a;j++){
-                if (ans[j] <=num[i] )
-                    A+=1;
-                else if (ans[j] >= num[i])
-                    B+=1;
-                if (A <= n/2 && B<= n/2)
+                if (num[i]==ans[j]){
                     ans2+=1;
+                    break;
+                }
             }
-           
+        }
+
+        for (i=0;i<a;i++){
+            for (j=0;j<i;j++){
+                if(ans[i]!=ans[j])
+                    ans3+=1;
+            }
+            
         }
         printf("%d %d\n",min,ans2);
     }

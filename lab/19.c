@@ -3,7 +3,7 @@
 
 int main()
 {
-    char c[1001];
+    char c[1001]
     while (gets(c)!=NULL){  
         int i,j,temp,ans=0;
         int cnt[128] = {0},b[128];

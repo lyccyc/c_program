@@ -19,7 +19,5 @@ int main() {
     for (i=0;i<b;i++){
         printf("%s", ans[i]);
     }
-    
-
     return 0;
 }
