@@ -1,8 +1,0 @@
-1.x的平方根
-double sqrt(double x)
-
-2.x的絕對值
-double abs(double x)
-
-3.x乘以2的n次方
-double 
