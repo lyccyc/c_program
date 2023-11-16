@@ -172,7 +172,7 @@ int main(){
 
     //預設玩家下黑棋
     int pos_x,pos_y;
-    printf("請下適合的位置:\n");
+    printf("請下黑子適合的位置:\n");
     scanf("%d %d",&pos_x,&pos_y);
     int current_color=1;
     chess[pos_x][pos_y]=current_color;
