@@ -1,31 +1,70 @@
+/*質數要排在非質數的前面，如果兩個數都是質數，數字大的要排在前面，如果兩個數都不是質數，數字小的要排在前面。**/
 #include <stdio.h>
-int main()
+#include <stdbool.h>
+#include <stdlib.h>
+int cmpfunc (const void * a, const void * b)
 {
-    int N,i,temp,prime=1;
-    scanf("%d",N);
-    int number[N];
-    for (i=0;i<N;i++){
-        scanf("%d",number[i]);
-    }
-    for (i=2;i<N;i++){
-        if (number[i]%i==0){
-            prime=0;
-            break;
+   return ( *(int*)a - *(int*)b );
+}
+
+bool isPrime(int a){
+    if(a<=1)
+        return false;
+
+    for (int i = 2; i * i <= a; i++) {
+        if (a % i == 0) {
+            return false;  // 如果有其他因數，則不是質數
         }
     }
-    /*是質數*/
-    if (prime){
 
-    }          
-    /*for (i = 0; i < L; ++i) {
-        for (int j = 0; j < i; ++j) {
-        if (number[j] > number[i] && number[i]%2) {
-            temp =number[j];
-            number[j] = number[i];
-            number[i] = temp;
+    return true;  // 是質數
+}
+
+int cmp(int a, int b){
+  return a - b;
+}
+
+int main(){
+
+    int n,i,j,temp;
+    scanf("%d",&n);
+
+    int arr[n];
+    for(i=0;i<n;i++){
+        scanf("%d",&arr[i]);
+    }
+
+    qsort(arr, n, sizeof(int), cmpfunc);
+
+    for(i=0;i<n;i++){
+        for(j=0;j<n-i-1;j++){
+            //兩個都是質數
+            if(isPrime(arr[j]) && isPrime(arr[j+1])){
+                if(cmp(arr[j],arr[j+1]) < 0){
+                int temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+                }
+            }
+            //兩個都不是質數
+            if(!isPrime(arr[j]) && !isPrime(arr[j+1])){
+                if(cmp(arr[j],arr[j+1]) > 0){
+                int temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+                }
+            }
+            if(!isPrime(arr[j]) && isPrime(arr[j+1])){
+                if(cmp(arr[j],arr[j+1]) < 0){
+                int temp=arr[j];
+                arr[j]=arr[j+1];
+                arr[j+1]=temp;
+                }
             }
         }
-    }*/
-
+    }
+    for(i=0;i<n;i++){
+        printf("%d ",arr[i]);
+    } 
     return 0;
 }
