@@ -1,85 +1,101 @@
 #include <stdio.h>
-int change_position(int arr[],int Index,int dead,int n){
-  size_t len=sizeof(arr) / sizeof(arr[0]);
-  int new_num[len]; 
-  int buryer=arr[Index]; //插入的值
-  int i; //迴圈變數
-  
-  for (i=0; i<n; ++i)
-  {
-    if (i < dead)
-    {
-      new_num[i] = arr[i]; /*迴圈變數i小於插入值位置Index時,每一個元素所放的位置不變*/
-    }
-    else if (i == dead)
-    {  
-      new_num[i] = buryer; //i等於Index時,將插入值賦給陣列b
-    }
-    else{
-        arr[i]=arr[i+1];
-        new_num[i] = arr[i-1]; /*因為插入了一個新的元素,所以插入位置後的每一個元素所存放的位置都要向後移一位*/
-    }
-  }
-  for(i=0;i<len;i++){
-    printf("%d ",new_num[i]);
-  }
-  printf("\n");
+int front = -1, rear = -1;
+
+// Check if the queue is full
+int isFull(int n) {
+  if ((front == rear + 1) || (front == 0 && rear == n - 1)) return 1;
+  return 0;
 }
 
-int delete_be_kill(int arr[],int Index,int n,int k)
-{
-  int surviver[n-1]; 
-  int i; //迴圈變數
-  
-  for (i=0; i<n; ++i)
-  {
-    if (i < Index)
-    {
-      surviver[i] =arr[i]; /*迴圈變數i小於插入值位置Index時,每一個元素所存放的位置不變*/
-    }
-    else
-    {
-      surviver[i] = arr[i+1]; /*刪除值後面的元素都往前移一位,要刪除的值直接被覆蓋*/
-    }
+// Check if the queue is empty
+int isEmpty() {
+  if (front == -1) return 1;
+  return 0;
+}
+
+// Adding an element
+int enQueue(int arr[],int n,int index,int element) {
+  if (isFull(n))
+    return 0;
+  else {
+    if (front == -1) 
+      front = 0;
+    //rear = (rear + 1) % SIZE;
+    arr[index] = element;
   }
-  int buryer=Index+k;
-  if(buryer<n)
-        change_position(surviver,buryer,Index,n);
-  else{
-    buryer=Index+k-(Index+1); 
-    change_position(surviver,buryer,Index,n);
-    }
-
 }
 
-int kill(int n,int k){
-    int num[n];
+// Removing an element
+int deQueue(int n,int index,int arr[]) {
+  int element;
+  if (isEmpty()) {
+    return 0;
+  } 
+  else {
+    element = arr[index];
+    if (front == rear) {
+      front = -1;
+      rear = -1;
+    } 
 
-    for(int i=1;i<=n;i++){
-        num[i]=i;
-        //printf("%d ", num[i]);
+    else {
+      front = (front + 1) % n;
     }
-    for(int i=0;i<n;i++){
-        int be_kill=(num[i]+k-1);
-        delete_be_kill(num,be_kill-1,n,k);
-    }
-    
+    printf("\n Deleted element -> %d \n", element);
+    return (element);
+  }
 }
+
+// Display the queue
+int display(int n,int arr[]) {
+  int i;
+  if (isEmpty())
+    printf(" \n Empty Queue\n");
+  else {
+    printf("\n Front -> %d\n ", front);
+    printf("\n Items -> ");
+    for (i = front; i != rear; i = (i + 1) % n) {
+      printf("%d ", arr[i]);
+    }
+    printf("%d ", arr[i]);
+    printf("\n Rear -> %d \n", rear);
+  }
+}
+
 int main() {
     int n, k;
+    int front=n-1;
+    int rear=n-1;
 
-    while (1) {
+    
+    while () {
         // 輸入人數和步長
         scanf("%d %d", &n, &k);
-
+        int num[n];
         // 檢查是否結束
         if (n == 0 && k == 0) {
             break;
         }
+        for(int i=0;i<n;i++)
+          num[i]=i+1;
 
-        // 計算安全起始位置並輸出
-        int safeStart = kill(n, k);
+        for(int i=0;i<n;i++){
+          int item1=num[i]+k-1; //2
+          deQueue(n,item1,num);
+          int item2=item1+k;//4
+          enQueue(num,n,item1,item2);
+        }
+
+        display(n,num);
+        break;
     }
 
     return 0;
 }
+
+//index: 0 1 2 3 4
+//numbe: 1 2 3 4 5
+//1: 1 4 3 5 dead:2
+//2: 1 3 4   daed:5
+//3: 1 4     dead:3
+//4: 4       dead:1
