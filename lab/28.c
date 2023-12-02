@@ -47,13 +47,14 @@ int main() {
             printf("%d %d\n",coordinates[i].x,coordinates[i].y);
 
         totalLength+=calculate(coordinates[N],coordinates[N-1]);
-        if(N<2){ 
-            for (int i = N-1; i < 0 ; i-2) {
-                if (coordinates[i - 2].y > coordinates[i].y) {
-                    totalLength += calculate(coordinates[i - 2], coordinates[i]);
+        if(N>2){ 
+            for (int i = N-1; i > 0 ; i--) {
+                if (coordinates[i - 1].y > coordinates[i].y) {
+                    totalLength += calculate(coordinates[i - 1], coordinates[i]);
                 }
                 else{
-                    totalLength += calculate(coordinates[i - 4], coordinates[i]);
+                    totalLength += calculate(coordinates[i - 2], coordinates[i]);
+                    i=i-2;
                 }
             }
         }

@@ -1,58 +1,64 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-int isSafe(int n,int maze[n][n], int x, int y) {
+#define MAX_SIZE 100
+
+// 走過的路徑用-1表示
+#define VISITED -1
+
+bool isSafe(int maze[MAX_SIZE][MAX_SIZE], int n, int x, int y) {
     // 確保(x, y)在陣列範圍內且不是障礙物
     return (x >= 0 && x < n && y >= 0 && y < n && maze[x][y] == 0);
 }
 
-int solve(int n,int maze[n][n], int x, int y) {
-    // 如果到達終點，返回true
+bool solveMazeUtil(int maze[MAX_SIZE][MAX_SIZE], int n, int x, int y) {
+    // 到終點
     if (x == n - 1 && y == n - 1) {
-        return 0;
+        return true;
     }
 
     // 標記當前位置為已訪問
-    maze[x][y] = 1;
+    maze[x][y] = VISITED;
 
-    // 從當前位置向四個方向嘗試
-    if (isSafe(n,maze, x + 1, y) && solve(n,maze, x + 1, y)) {
-        return 0; // 向下移動
+    // 四個方向
+    if (isSafe(maze, n, x + 1, y) && solveMazeUtil(maze, n, x + 1, y)) {
+        return true; // 向下移動
     }
-    else if (isSafe(n,maze, x, y + 1) && solve(n,maze, x, y + 1)) {
-        return 0; // 向右移動
+    if (isSafe(maze, n, x, y + 1) && solveMazeUtil(maze, n, x, y + 1)) {
+        return true; // 向右移動
     }
-    else if (isSafe(n,maze, x - 1, y) && solve(n,maze, x - 1, y)) {
-        return 0; // 向上移動
+    if (isSafe(maze, n, x - 1, y) && solveMazeUtil(maze, n, x - 1, y)) {
+        return true; // 向上移動
     }
-    else if (isSafe(n,maze, x, y - 1) && solve(n ,maze, x, y - 1)) {
-        return 0; // 向左移動
+    if (isSafe(maze, n, x, y - 1) && solveMazeUtil(maze, n, x, y - 1)) {
+        return true; // 向左移動
     }
 
-    // 如果無法移動，標記為未訪問並返回false
     maze[x][y] = 0;
-    return 1;
+    return false;
 }
 
-int Maze(int n,int maze[n][n]) {
-    return solve(n,maze, 0, 0);
+bool solveMaze(int maze[MAX_SIZE][MAX_SIZE], int n) {
+    return solveMazeUtil(maze, n, 0, 0);
 }
 
 int main() {
     int n;
     scanf("%d", &n);
 
-    int maze[n][n];
+    int maze[MAX_SIZE][MAX_SIZE];
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             scanf("%d", &maze[i][j]);
         }
     }
 
-    if (Maze(n,maze)) {
-        printf("Yes");
+    if (solveMaze(maze, n)) {
+        printf("Yes\n");
     } else {
-        printf("No");
+        printf("No\n");
     }
 
     return 0;
 }
+
