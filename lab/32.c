@@ -13,6 +13,7 @@ bool isSafe(int maze[MAX_SIZE][MAX_SIZE], int n, int x, int y) {
 
 bool solveMazeUtil(int maze[MAX_SIZE][MAX_SIZE], int n, int x, int y) {
     // 到終點
+    //printf("%d %d\n", x, y);
     if (x == n - 1 && y == n - 1) {
         return true;
     }
@@ -24,17 +25,17 @@ bool solveMazeUtil(int maze[MAX_SIZE][MAX_SIZE], int n, int x, int y) {
     if (isSafe(maze, n, x + 1, y) && solveMazeUtil(maze, n, x + 1, y)) {
         return true; // 向下移動
     }
-    if (isSafe(maze, n, x, y + 1) && solveMazeUtil(maze, n, x, y + 1)) {
+    else if (isSafe(maze, n, x, y + 1) && solveMazeUtil(maze, n, x, y + 1)) {
         return true; // 向右移動
     }
-    if (isSafe(maze, n, x - 1, y) && solveMazeUtil(maze, n, x - 1, y)) {
+    else if (isSafe(maze, n, x - 1, y) && solveMazeUtil(maze, n, x - 1, y)) {
         return true; // 向上移動
     }
-    if (isSafe(maze, n, x, y - 1) && solveMazeUtil(maze, n, x, y - 1)) {
+    else if (isSafe(maze, n, x, y - 1) && solveMazeUtil(maze, n, x, y - 1)) {
         return true; // 向左移動
     }
 
-    maze[x][y] = 0;
+    ///maze[x][y] = 0;
     return false;
 }
 
@@ -55,10 +56,17 @@ int main() {
 
     if (solveMaze(maze, n)) {
         printf("Yes\n");
-    } else {
+    } 
+    else {
         printf("No\n");
     }
 
     return 0;
 }
+
+
+
+
+
+
 
