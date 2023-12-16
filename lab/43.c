@@ -21,7 +21,7 @@ DeciVar addDeciVars(DeciVar num1, DeciVar num2) {
   int len2 = strlen(num2.decimal);
   int maxLen = len1 > len2 ? len1 : len2;
 
-  for (int i = 0; i < maxLen; i++) {
+  for (int i = maxLen-1; i >= 0; i--) {
     int digit1 = (i < len1) ? (num1.decimal[i] - '0') : 0;
     int digit2 = (i < len2) ? (num2.decimal[i] - '0') : 0;
     int sum = digit1 + digit2 + carry;
