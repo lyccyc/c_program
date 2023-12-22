@@ -1,7 +1,7 @@
 int main() {
   init();
-  char *str = s1;
-  char *key = s2;
+  char str = s1;
+  char* key = s2;
   int count=0;
   int keyLength=strlen(key);
   while (*str) {

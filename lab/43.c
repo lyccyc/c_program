@@ -32,9 +32,9 @@ DeciVar addDeciVars(DeciVar num1, DeciVar num2) {
 
   if (carry > 0) {
     result.decimal[maxLen] = carry + '0';
-    result.decimal[maxLen + 1] = '\0';
+    result.decimal[maxLen + 1] = '0';
   } else {
-    result.decimal[maxLen] = '\0';
+    result.decimal[maxLen] = '0';
   }
 
   // Add integer parts
@@ -53,9 +53,9 @@ DeciVar addDeciVars(DeciVar num1, DeciVar num2) {
 
   if (carry > 0) {
     result.integer[maxLen] = carry + '0';
-    result.integer[maxLen + 1] = '\0';
+    result.integer[maxLen + 1] = '0';
   } else {
-    result.integer[maxLen] = '\0';
+    result.integer[maxLen] = '0';
   }
 
   return result;
